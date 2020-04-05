@@ -1,6 +1,6 @@
 package controllers.menuitems;
 
-import cmdlineviews.IMenuView;
+import view.IMenuView;
 
 public class HelpItem implements IMenuItem {
     IMenuView view;
@@ -11,6 +11,6 @@ public class HelpItem implements IMenuItem {
 
     @Override
     public void execute() {
-        view.show();
+        view.showHelp();
     }
 }

@@ -3,22 +3,18 @@ package models;
 import controllers.menuitems.IMenuItem;
 
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class Menu implements IMenu {
     Map<String, IMenuItem> items;
     List<IMenuObserver> observers;
 
-    public Menu(Map<String, IMenuItem> items, List<IMenuObserver> observers) {
-        this.items = items;
-        this.observers = observers;
+    public Menu() {
+        this.items = new HashMap<>();
+        this.observers = new ArrayList<>();
     }
 
     public Optional<IMenuItem> getItem(String name) {
-        System.out.println();
         if(items.containsKey(name)) {
             return Optional.of(items.get(name));
         }

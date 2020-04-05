@@ -1,18 +1,17 @@
 package controllers.menuitems;
 
-import cmdlineviews.IMenuView;
+import view.IMenuView;
 import models.IMenu;
 
 public class StartItem implements IMenuItem {
-    IMenu model;
     IMenuView view;
 
-    public StartItem(IMenu model, IMenuView view) {
-        this.model = model;
+    public StartItem(IMenuView view) {
         this.view = view;
     }
 
     public void execute() {
-        System.out.println("On start");
+        view.show("On start");
+        view.startGame();
     }
 }
