@@ -33,6 +33,10 @@ public class Menu implements IMenu {
         items.remove(name);
     }
 
+    public void cleanMenu() {
+        items.clear();
+    }
+
     public void registerObserver(IMenuObserver menuObserver) {
         observers.add(menuObserver);
     }

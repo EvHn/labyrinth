@@ -23,7 +23,6 @@ public class LabyrinthView implements ILabyrinthView, ICommandView, ILabyrinthOb
         enableControl();
         commandMap.put("restart", controller::restart);
         commandMap.put("help", controller::help);
-        CmdMainView.getInstance().putView("game", this);
     }
 
     @Override

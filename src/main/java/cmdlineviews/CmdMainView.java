@@ -1,5 +1,7 @@
 package cmdlineviews;
 
+import view.IViewFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -8,9 +10,14 @@ public class CmdMainView {
     private Map<String, ICommandView> views;
     private ICommandView view;
     private static CmdMainView mainCmdMainView = new CmdMainView();
+    private static CmdViewFactory cmdViewFactory = new CmdViewFactory();
 
     public static CmdMainView getInstance() {
         return mainCmdMainView;
+    }
+
+    public static IViewFactory getCmdViewFactory() {
+        return cmdViewFactory;
     }
 
     public CmdMainView() {

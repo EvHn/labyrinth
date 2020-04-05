@@ -2,15 +2,15 @@ package controllers.menuitems;
 
 import view.IMenuView;
 
-public class ExitItem implements IMenuItem {
+public class BackItem implements IMenuItem {
     IMenuView view;
 
-    public ExitItem(IMenuView view) {
+    public BackItem(IMenuView view) {
         this.view = view;
     }
 
+    @Override
     public void execute() {
-        view.show("On exit");
-        System.exit(0);
+        view.onItem("back");
     }
 }

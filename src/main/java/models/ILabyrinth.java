@@ -6,6 +6,7 @@ import java.time.Duration;
 
 public interface ILabyrinth {
     boolean goTo(Direction direction);
+    boolean canGoTo(Direction direction);
     Pair<Integer, Integer> getCoordinates();
     void loadLevel(String name);
     String getLevelName();

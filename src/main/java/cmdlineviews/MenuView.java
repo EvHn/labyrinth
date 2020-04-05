@@ -11,7 +11,6 @@ public class MenuView implements IMenuView, ICommandView {
     public MenuView(IMenuController controller, IMenu model) {
         this.model = model;
         this.controller = controller;
-        CmdMainView.getInstance().putView("menu", this);
     }
 
     public void executeCommand(String command) {
@@ -29,7 +28,9 @@ public class MenuView implements IMenuView, ICommandView {
     }
 
     @Override
-    public void startGame() {
-        CmdMainView.getInstance().setState("game");
+    public void onItem(String itemName) {
+        if("game".equals(itemName)) {
+            CmdMainView.getInstance().setState("gameMenu");
+        }
     }
 }

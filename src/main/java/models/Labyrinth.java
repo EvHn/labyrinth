@@ -1,6 +1,5 @@
 package models;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.time.Duration;
@@ -25,7 +24,7 @@ public class Labyrinth implements ILabyrinth {
 
     @Override
     public boolean goTo(Direction direction) {
-        if(canGo(direction)) {
+        if(canGoTo(direction)) {
             moveTo(direction);
             if(isOverGame()) {
                 notifyObservers();
@@ -39,7 +38,7 @@ public class Labyrinth implements ILabyrinth {
 
     @Override
     public void start() {
-        System.out.println("game started");
+
     }
 
     @Override
@@ -66,7 +65,7 @@ public class Labyrinth implements ILabyrinth {
         }
     }
 
-    private boolean canGo(Direction direction) {
+    public boolean canGoTo(Direction direction) {
         return false;
     }
 
@@ -78,9 +77,6 @@ public class Labyrinth implements ILabyrinth {
     @Override
     public void loadLevel(String name) {
         levelName = name;
-        field = new char[][]{{'0', '0', '0'},
-                             {'0', '0', '0'},
-                             {'0', '0', '0'}};
     }
 
     @Override

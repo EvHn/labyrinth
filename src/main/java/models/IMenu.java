@@ -9,6 +9,7 @@ public interface IMenu {
     Optional<IMenuItem> getItem(String name);
     Set<String> getItemNames();
     void addItem(String name, IMenuItem item);
+    void cleanMenu();
     void deleteItem(String name);
     void registerObserver(IMenuObserver menuObserver);
     void removeObserver(IMenuObserver menuObserver);

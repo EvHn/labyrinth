@@ -18,6 +18,7 @@ public class LabyrinthController implements ILabyrinthController, ILabyrinthObse
     @Override
     public void start(String levelName) {
         model.loadLevel(levelName);
+        model.start();
         view.enableControl();
     }
 
