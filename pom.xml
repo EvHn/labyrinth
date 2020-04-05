@@ -7,6 +7,18 @@
     <groupId>org.lalala.game</groupId>
     <artifactId>labyrinth</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub EvHn Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/EvHn/labyrinth</url>
+        </repository>
+        <snapshotRepository>
+            <id>github</id>
+            <name>GitHub EvHn Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/EvHn/labyrinth</url>
+        </snapshotRepository>
+    </distributionManagement>
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
