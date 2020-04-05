@@ -1,14 +1,16 @@
 package models;
 
 import org.apache.commons.lang3.tuple.Pair;
+import utils.IDataLoader;
 
 import java.time.Duration;
 
 public interface ILabyrinth {
-    boolean goTo(Direction direction);
+    void setDataLoader(IDataLoader dataLoader);
+    void goTo(Direction direction);
     boolean canGoTo(Direction direction);
     Pair<Integer, Integer> getCoordinates();
-    void loadLevel(String name);
+    boolean loadLevel(String name);
     String getLevelName();
     void recordStartTime();
     void recordEndTime();

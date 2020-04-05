@@ -1,39 +1,43 @@
 package models;
 
+import data.Config;
+import data.Level;
 import org.apache.commons.lang3.tuple.Pair;
+import utils.IDataLoader;
 
+import java.nio.file.Path;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 public class Labyrinth implements ILabyrinth {
-
     private Pair<Integer, Integer> coordinates;
     private List<ILabyrinthObserver> observers;
+    private IDataLoader dataLoader;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private char[][] field;
-    private String levelName;
+    private Level level;
+    private List<Character> correctPlace;
 
     public Labyrinth() {
         coordinates = Pair.of(1,1);
+        correctPlace = List.of('0', 'f', 's');
         this.observers = new ArrayList<>();
     }
 
     @Override
-    public boolean goTo(Direction direction) {
-        if(canGoTo(direction)) {
-            moveTo(direction);
-            if(isOverGame()) {
-                notifyObservers();
-                recordEndTime();
-            }
-            return true;
-        }
+    public void setDataLoader(IDataLoader dataLoader) {
+        this.dataLoader = dataLoader;
+    }
 
-        return false;
+    @Override
+    public void goTo(Direction direction) {
+        coordinates = moveTo(coordinates, direction);
+        if(isOverGame()) {
+            notifyObservers();
+            recordEndTime();
+        }
     }
 
     @Override
@@ -43,29 +47,39 @@ public class Labyrinth implements ILabyrinth {
 
     @Override
     public String getLevelName() {
-        return levelName;
+        return level.getName();
     }
 
     private boolean isOverGame() {
-        return true;
+        return level.getField().get(coordinates.getRight()).get(coordinates.getLeft()).equals('f');
     }
 
-    private void moveTo(Direction direction) {
+    private Pair<Integer, Integer> moveTo(Pair<Integer, Integer> coordinates, Direction direction) {
         switch(direction) {
             case BACK:
-                coordinates = Pair.of(coordinates.getLeft(), coordinates.getRight() - 1);
-                break;
+                return Pair.of(coordinates.getLeft(), coordinates.getRight() - 1);
             case LEFT:
-                coordinates = Pair.of(coordinates.getLeft() - 1, coordinates.getRight());
-                break;
+                return Pair.of(coordinates.getLeft() - 1, coordinates.getRight());
             case RIGHT:
-                coordinates = Pair.of(coordinates.getLeft() + 1, coordinates.getRight());
+                return Pair.of(coordinates.getLeft() + 1, coordinates.getRight());
             case FORWARD:
-                coordinates = Pair.of(coordinates.getLeft(), coordinates.getRight() + 1);
+                return Pair.of(coordinates.getLeft(), coordinates.getRight() + 1);
+            default:
+                return coordinates;
         }
     }
 
     public boolean canGoTo(Direction direction) {
+        Pair<Integer, Integer> place = moveTo(coordinates, direction);
+        List<List<Character>> field = level.getField();
+        Integer y = place.getRight();
+        if(y < field.size() && y >= 0) {
+            List<Character> row = level.getField().get(y);
+            Integer x = place.getLeft();
+            if(x < row.size() && x >= 0) {
+                return correctPlace.contains(row.get(place.getLeft()));
+            }
+        }
         return false;
     }
 
@@ -75,8 +89,16 @@ public class Labyrinth implements ILabyrinth {
     }
 
     @Override
-    public void loadLevel(String name) {
-        levelName = name;
+    public boolean loadLevel(String name) {
+        Optional<Config> config = dataLoader.loadConfig();
+        if(config.isPresent()) {
+            Optional<Level> level = dataLoader.loadLevel(name, Path.of(config.get().getLevels().get(name)));
+            if(level.isPresent()) {
+                this.level = level.get();
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

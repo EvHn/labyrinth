@@ -14,6 +14,6 @@ public class LevelItem implements IMenuItem {
     @Override
     public void execute() {
         view.show("On start");
-        view.onItem("start");
+        view.onItem(name);
     }
 }

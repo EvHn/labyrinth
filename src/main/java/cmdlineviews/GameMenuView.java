@@ -4,6 +4,9 @@ import controllers.IMenuController;
 import models.IMenu;
 import view.IMenuView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GameMenuView implements IMenuView, ICommandView {
     private IMenuController controller;
     private IMenu model;
@@ -12,6 +15,9 @@ public class GameMenuView implements IMenuView, ICommandView {
         this.controller = controller;
         this.model = model;
     }
+
+    @Override
+    public void init(Map<String, String> options) {}
 
     @Override
     public void executeCommand(String name) {
@@ -32,8 +38,10 @@ public class GameMenuView implements IMenuView, ICommandView {
     public void onItem(String itemName) {
         if("back".equals(itemName)) {
             CmdMainView.getInstance().setState("menu");
-        } else if("start".equals(itemName)) {
-            CmdMainView.getInstance().setState("game");
+        } else {
+            Map<String, String> options = new HashMap<>();
+            options.put("levelName", itemName);
+            CmdMainView.getInstance().setState("game", options);
         }
     }
 }

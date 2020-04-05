@@ -17,6 +17,6 @@ public class CmdLabyrinthGame {
     public static void init(IViewFactory viewFactory, IUtilsFactory utilsFactory) {
         new MenuController(new Menu(), viewFactory, utilsFactory);
         new GameMenuController(new Menu(), viewFactory, utilsFactory);
-        new LabyrinthController(new Labyrinth(), viewFactory);
+        new LabyrinthController(new Labyrinth(), viewFactory, utilsFactory);
     }
 }

@@ -1,5 +1,5 @@
 {
   "levels" : {
-    "level_1" : "./levels/level1.json"
+    "level_1" : "src/main/resources/levels/level1.json"
   }
 }

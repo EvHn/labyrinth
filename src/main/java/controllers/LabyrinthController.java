@@ -2,30 +2,51 @@ package controllers;
 
 import models.ILabyrinth;
 import models.ILabyrinthObserver;
+import org.apache.commons.lang3.tuple.Pair;
+import utils.IUtilsFactory;
 import view.ILabyrinthView;
 import view.IViewFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LabyrinthController implements ILabyrinthController, ILabyrinthObserver {
     private ILabyrinth model;
     private ILabyrinthView view;
+    private Map<ILabyrinth.Direction, Pair<Runnable, Runnable>> control;
 
-    public LabyrinthController(ILabyrinth model, IViewFactory factory) {
+    public LabyrinthController(ILabyrinth model, IViewFactory factory, IUtilsFactory utilsFactory) {
         this.model = model;
+        model.setDataLoader(utilsFactory.createDataLoader());
         model.registerObserver(this);
         this.view = factory.createLabyrinthView(this, model);
+        control = new HashMap<>();
+        control.put(ILabyrinth.Direction.RIGHT, Pair.of(view::enableRight, view::disableRight));
+        control.put(ILabyrinth.Direction.LEFT, Pair.of(view::enableLeft, view::disableLeft));
+        control.put(ILabyrinth.Direction.BACK, Pair.of(view::enableBack, view::disableBack));
+        control.put(ILabyrinth.Direction.FORWARD, Pair.of(view::enableForward, view::disableForward));
     }
 
     @Override
-    public void start(String levelName) {
-        model.loadLevel(levelName);
-        model.start();
-        view.enableControl();
+    public void init(Map<String, String> options) {
+        if(model.loadLevel(options.get("levelName"))) {
+            model.start();
+            return;
+        }
+        view.show("Error loading level");
+        exit();
+    }
+
+    @Override
+    public void start() {
+        model.recordStartTime();
+        setControl();
     }
 
     @Override
     public void restart() {
         model.loadLevel(model.getLevelName());
-        view.enableControl();
+        setControl();
     }
 
     @Override
@@ -49,11 +70,22 @@ public class LabyrinthController implements ILabyrinthController, ILabyrinthObse
     }
 
     private void goTo(ILabyrinth.Direction direction) {
-        if(model.goTo(direction)) {
-            view.show("go");
+        if(model.canGoTo(direction)) {
+            view.show("You go " + direction);
+            model.goTo(direction);
+            setControl();
         } else {
-            view.show("You can't go to " + direction);
+            view.show("You can't go " + direction);
         }
+    }
+
+    private void setControl() {
+        control.entrySet().stream().map(entry -> {
+                if(model.canGoTo(entry.getKey())) {
+                    return entry.getValue().getLeft();
+                }
+                return entry.getValue().getRight();
+        }).forEach(Runnable::run);
     }
 
     @Override

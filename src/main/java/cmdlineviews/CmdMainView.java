@@ -41,4 +41,9 @@ public class CmdMainView {
     public void setState(String state) {
         view = views.get(state);
     }
+
+    public void setState(String state, Map<String, String> options) {
+        view = views.get(state);
+        view.init(options);
+    }
 }

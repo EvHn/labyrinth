@@ -1,7 +1,10 @@
 package controllers;
 
+import java.util.Map;
+
 public interface ILabyrinthController {
-    void start(String levelName);
+    void init(Map<String, String> options);
+    void start();
     void restart();
     void back();
     void forward();

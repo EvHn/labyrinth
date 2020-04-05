@@ -4,6 +4,8 @@ import controllers.IMenuController;
 import models.IMenu;
 import view.IMenuView;
 
+import java.util.Map;
+
 public class MenuView implements IMenuView, ICommandView {
     IMenu model;
     IMenuController controller;
@@ -32,5 +34,10 @@ public class MenuView implements IMenuView, ICommandView {
         if("game".equals(itemName)) {
             CmdMainView.getInstance().setState("gameMenu");
         }
+    }
+
+    @Override
+    public void init(Map<String, String> options) {
+
     }
 }
