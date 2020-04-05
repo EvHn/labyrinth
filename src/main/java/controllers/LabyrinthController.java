@@ -30,7 +30,7 @@ public class LabyrinthController implements ILabyrinthController, ILabyrinthObse
     @Override
     public void init(Map<String, String> options) {
         if(model.loadLevel(options.get("levelName"))) {
-            model.start();
+            model.setStartPlace();
             return;
         }
         view.show("Error loading level");

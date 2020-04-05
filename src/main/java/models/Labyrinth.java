@@ -18,12 +18,20 @@ public class Labyrinth implements ILabyrinth {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Level level;
-    private List<Character> correctPlace;
+    private List<Character> correctPlaces;
 
     public Labyrinth() {
-        coordinates = Pair.of(1,1);
-        correctPlace = List.of('0', 'f', 's');
+        correctPlaces = List.of('0', 'f', 's');
         this.observers = new ArrayList<>();
+    }
+
+    public void setStartPlace() {
+        Optional<List<Character>> line = level.getField().stream().filter(l -> l.contains('s')).findAny();
+        if(line.isPresent()) {
+            coordinates = Pair.of(line.get().indexOf('s'), level.getField().indexOf(line.get()));
+        } else {
+            coordinates = Pair.of(0, 0);
+        }
     }
 
     @Override
@@ -41,11 +49,6 @@ public class Labyrinth implements ILabyrinth {
     }
 
     @Override
-    public void start() {
-
-    }
-
-    @Override
     public String getLevelName() {
         return level.getName();
     }
@@ -59,9 +62,9 @@ public class Labyrinth implements ILabyrinth {
             case BACK:
                 return Pair.of(coordinates.getLeft(), coordinates.getRight() - 1);
             case LEFT:
-                return Pair.of(coordinates.getLeft() - 1, coordinates.getRight());
-            case RIGHT:
                 return Pair.of(coordinates.getLeft() + 1, coordinates.getRight());
+            case RIGHT:
+                return Pair.of(coordinates.getLeft() - 1, coordinates.getRight());
             case FORWARD:
                 return Pair.of(coordinates.getLeft(), coordinates.getRight() + 1);
             default:
@@ -77,7 +80,7 @@ public class Labyrinth implements ILabyrinth {
             List<Character> row = level.getField().get(y);
             Integer x = place.getLeft();
             if(x < row.size() && x >= 0) {
-                return correctPlace.contains(row.get(place.getLeft()));
+                return correctPlaces.contains(row.get(x));
             }
         }
         return false;

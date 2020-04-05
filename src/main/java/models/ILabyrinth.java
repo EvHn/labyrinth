@@ -15,7 +15,7 @@ public interface ILabyrinth {
     void recordStartTime();
     void recordEndTime();
     Duration getGameTime();
-    void start();
+    void setStartPlace();
     void registerObserver(ILabyrinthObserver observer);
     void removeObserver(ILabyrinthObserver observer);
     enum Direction {
