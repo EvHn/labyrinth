@@ -1,7 +1,9 @@
-import cmdlineviews.CmdMainView;
+package lalala.game;
+
 import controllers.GameMenuController;
 import controllers.LabyrinthController;
 import controllers.MenuController;
+import lalala.game.cmdlineviews.CmdMainView;
 import models.Labyrinth;
 import models.Menu;
 import utils.IUtilsFactory;

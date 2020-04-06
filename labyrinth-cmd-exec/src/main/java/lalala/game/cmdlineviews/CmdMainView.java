@@ -1,4 +1,4 @@
-package cmdlineviews;
+package lalala.game.cmdlineviews;
 
 import view.IViewFactory;
 
