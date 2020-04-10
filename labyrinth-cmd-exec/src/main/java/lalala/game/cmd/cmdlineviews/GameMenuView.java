@@ -1,8 +1,8 @@
 package lalala.game.cmd.cmdlineviews;
 
-import lalala.game.core.controllers.IMenuController;
-import lalala.game.core.models.IMenu;
-import lalala.game.core.view.IMenuView;
+import lalala.game.mvc.controllers.IMenuController;
+import lalala.game.mvc.models.IMenu;
+import lalala.game.mvc.view.IMenuView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,11 +37,11 @@ public class GameMenuView implements IMenuView, ICommandView {
     @Override
     public void onItem(String itemName) {
         if("back".equals(itemName)) {
-            CmdMainView.getInstance().setState("menu");
+            CmdViewManager.getInstance().setState("menu");
         } else {
             Map<String, String> options = new HashMap<>();
             options.put("levelName", itemName);
-            CmdMainView.getInstance().setState("game", options);
+            CmdViewManager.getInstance().setState("game", options);
         }
     }
 }

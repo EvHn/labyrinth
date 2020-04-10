@@ -1,18 +1,19 @@
 package lalala.game.cmd.cmdlineviews;
 
-import lalala.game.core.controllers.ILabyrinthController;
-import lalala.game.core.models.ILabyrinth;
-import lalala.game.core.models.ILabyrinthObserver;
-import lalala.game.core.view.ILabyrinthView;
+
+import lalala.game.mvc.controllers.ILabyrinthController;
+import lalala.game.mvc.models.ILabyrinth;
+import lalala.game.mvc.models.ILabyrinthObserver;
+import lalala.game.mvc.view.ILabyrinthView;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public class LabyrinthView implements ILabyrinthView, ICommandView, ILabyrinthObserver {
-    ILabyrinthController controller;
-    ILabyrinth model;
-    Map<String, Runnable> commandMap;
+    private ILabyrinthController controller;
+    private ILabyrinth model;
+    private Map<String, Runnable> commandMap;
 
     private static final String BACK = "back";
     private static final String FORWARD = "forward";
@@ -31,7 +32,7 @@ public class LabyrinthView implements ILabyrinthView, ICommandView, ILabyrinthOb
 
     @Override
     public void toMenu() {
-        CmdMainView.getInstance().setState("menu");
+        CmdViewManager.getInstance().setState("menu");
     }
 
     @Override

@@ -1,14 +1,14 @@
 package lalala.game.cmd.cmdlineviews;
 
-import lalala.game.core.controllers.IMenuController;
-import lalala.game.core.models.IMenu;
-import lalala.game.core.view.IMenuView;
+import lalala.game.mvc.controllers.IMenuController;
+import lalala.game.mvc.models.IMenu;
+import lalala.game.mvc.view.IMenuView;
 
 import java.util.Map;
 
 public class MenuView implements IMenuView, ICommandView {
-    IMenu model;
-    IMenuController controller;
+    private IMenu model;
+    private IMenuController controller;
 
     public MenuView(IMenuController controller, IMenu model) {
         this.model = model;
@@ -32,7 +32,7 @@ public class MenuView implements IMenuView, ICommandView {
     @Override
     public void onItem(String itemName) {
         if("game".equals(itemName)) {
-            CmdMainView.getInstance().setState("gameMenu");
+            CmdViewManager.getInstance().setState("gameMenu");
         }
     }
 

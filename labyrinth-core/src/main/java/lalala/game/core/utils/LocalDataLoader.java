@@ -5,15 +5,19 @@ import lalala.game.core.data.Config;
 import lalala.game.core.data.Level;
 
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 public class LocalDataLoader implements IDataLoader {
-    ObjectMapper mapper;
-    Config config;
+    private Path configPath;
+    private ObjectMapper mapper;
+    private Config config;
 
-    public LocalDataLoader() {
+    public LocalDataLoader(String configPath) {
         mapper = new ObjectMapper();
+        this.configPath = Path.of(configPath);
     }
 
     @Override
@@ -22,8 +26,7 @@ public class LocalDataLoader implements IDataLoader {
             synchronized(Config.class) {
                 if(config == null) {
                     try {
-                        Path path = Path.of("src/main/resources/config.json");
-                        return Optional.of(mapper.readValue(path.toFile(), Config.class));
+                        return Optional.of(mapper.readValue(configPath.toFile(), Config.class));
                     } catch (IOException ex) {
                         return Optional.empty();
                     }
