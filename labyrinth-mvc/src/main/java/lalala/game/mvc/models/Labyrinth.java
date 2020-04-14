@@ -1,7 +1,7 @@
 package lalala.game.mvc.models;
 
-import lalala.game.core.data.Config;
 import lalala.game.core.data.Level;
+import lalala.game.core.data.LevelList;
 import lalala.game.core.labyrinth.Direction;
 import lalala.game.core.labyrinth.ILabyrinthHelper;
 import lalala.game.core.labyrinth.LabyrinthHelper;
@@ -70,9 +70,10 @@ public class Labyrinth implements ILabyrinth {
 
     @Override
     public boolean loadLevel(String name) {
-        Optional<Config> config = dataLoader.loadConfig();
+        Optional<LevelList> config = dataLoader.loadConfig();
         if(config.isPresent()) {
-            Optional<Level> level = dataLoader.loadLevel(name, Path.of(config.get().getLevels().get(name)));
+            Optional<Level> level = dataLoader.loadLevel(name, Path.of(config.get().getLevels()
+                    .stream().filter(s -> s.equals(name)).findFirst().get()));
             if(level.isPresent()) {
                 this.level = level.get();
                 return true;

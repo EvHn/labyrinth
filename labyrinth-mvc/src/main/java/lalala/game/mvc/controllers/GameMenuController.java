@@ -19,7 +19,7 @@ public class GameMenuController implements IMenuController {
         this.model = model;
         this.view = viewFactory.createGameMenuView(this, model);
         dataLoader.loadConfig().ifPresentOrElse(
-                config -> config.getLevels().keySet().stream().forEach(i -> model.addItem(i, new LevelItem(i, view))),
+                config -> config.getLevels().stream().forEach(i -> model.addItem(i, new LevelItem(i, view))),
                 () -> view.show("Error loading config"));
         itemProcessor = new ItemProcessor(model, view);
         model.addItem("exit", new BackItem(view));
