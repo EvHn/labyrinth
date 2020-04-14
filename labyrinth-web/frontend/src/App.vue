@@ -1,17 +1,19 @@
 <template>
   <div id="app">
-
-
+    <Menu></Menu>
+    <Play></Play>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Menu from './components/Menu.vue'
+import Play from './components/Play.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Menu,
+    Play
   }
 }
 </script>
